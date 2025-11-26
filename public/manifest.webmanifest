@@ -1,0 +1,17 @@
+{
+  "name": "SproutLife",
+  "short_name": "SproutLife",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#165a34",
+  "theme_color": "#1e7a40",
+  "icons": [
+    {
+      "src": "/sproutlife-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
