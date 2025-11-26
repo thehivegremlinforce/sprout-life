@@ -72,7 +72,7 @@ const SpacingVisualizer: React.FC<{ between: string; row: string; depth: string;
         </div>
         
         {/* Labels */}
-        <div className="absolute -bottom-6 w-full text-center text-[10px] font-bold text-indigo-300 uppercase tracking-widest">
+        <div className={`absolute -bottom-6 w-full text-center text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-emerald-300/80' : 'text-indigo-300'}`}>
            Plan View
         </div>
       </div>
@@ -104,6 +104,14 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset, is
   const subtleCaps = isDarkMode ? 'text-emerald-400/80' : 'text-stone-400';
   const softSurface = isDarkMode ? 'bg-emerald-950/40 border border-emerald-900 text-emerald-100' : 'bg-stone-50 border border-stone-100 text-stone-600';
   const pillSurface = isDarkMode ? 'bg-emerald-900/60 text-emerald-100 border border-emerald-800' : 'bg-white text-emerald-800 border border-emerald-100';
+
+  const parseSpacingValue = (value: string) => {
+    const match = value.match(/\d+(?:\.\d+)?(?:\s*(?:-|to)\s*\d+(?:\.\d+)?)/i);
+    return match ? match[0].replace(/\s+/g, ' ') : value;
+  };
+
+  const plantSpacingValue = parseSpacingValue(plan.spacing.plantSpacing);
+  const rowSpacingValue = parseSpacingValue(plan.spacing.rowSpacing);
 
   return (
     <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 pb-12">
@@ -334,21 +342,30 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset, is
              <div className="grid grid-cols-2 gap-3 text-center mb-4">
                <div className={`p-3 rounded-2xl border ${isDarkMode ? 'bg-emerald-950/50 border-emerald-900 text-emerald-100' : 'bg-stone-50 border border-stone-100'}`}>
                   <div className={`text-[10px] font-bold uppercase mb-1 ${subtleCaps}`}>Seed Depth</div>
-                  <div className={`font-bold text-sm whitespace-pre-line ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.seedDepth}</div>
+                  <div className={`font-bold text-sm whitespace-pre-line break-words ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.seedDepth}</div>
                </div>
                <div className={`p-3 rounded-2xl border ${isDarkMode ? 'bg-emerald-950/50 border-emerald-900 text-emerald-100' : 'bg-stone-50 border border-stone-100'}`}>
                   <div className={`text-[10px] font-bold uppercase mb-1 ${subtleCaps}`}>Thin To</div>
-                  <div className={`font-bold text-sm whitespace-pre-line ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.thinning}</div>
+                  <div className={`font-bold text-sm whitespace-pre-line break-words ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.thinning}</div>
                </div>
                <div className={`p-3 rounded-2xl border col-span-2 ${isDarkMode ? 'bg-emerald-950/50 border-emerald-900 text-emerald-100' : 'bg-stone-50 border border-stone-100'}`}>
-                  <div className={`text-[10px] font-bold uppercase mb-1 ${subtleCaps}`}>Distance</div>
-                  <div className={`font-bold text-sm whitespace-pre-line ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.plantSpacing} between plants<br/>{plan.spacing.rowSpacing} between rows</div>
+                  <div className={`text-[10px] font-bold uppercase mb-2 ${subtleCaps}`}>Distance</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
+                    <div className={`rounded-xl px-3 py-2 border flex flex-col gap-1 ${isDarkMode ? 'bg-emerald-950/70 border-emerald-900/80' : 'bg-white border-emerald-50'}`}>
+                      <span className={`text-[10px] uppercase font-bold tracking-wide ${subtleCaps}`}>Between Plants</span>
+                      <span className={`font-semibold text-sm leading-snug whitespace-pre-line break-words ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.plantSpacing}</span>
+                    </div>
+                    <div className={`rounded-xl px-3 py-2 border flex flex-col gap-1 ${isDarkMode ? 'bg-emerald-950/70 border-emerald-900/80' : 'bg-white border-emerald-50'}`}>
+                      <span className={`text-[10px] uppercase font-bold tracking-wide ${subtleCaps}`}>Between Rows</span>
+                      <span className={`font-semibold text-sm leading-snug whitespace-pre-line break-words ${isDarkMode ? 'text-emerald-50' : 'text-stone-800'}`}>{plan.spacing.rowSpacing}</span>
+                    </div>
+                  </div>
                </div>
              </div>
              
              <SpacingVisualizer
-                between={plan.spacing.plantSpacing.split(' ')[0] + (units === UnitSystem.METRIC ? 'cm' : 'in')}
-                row={plan.spacing.rowSpacing.split(' ')[0] + (units === UnitSystem.METRIC ? 'cm' : 'in')}
+                between={plantSpacingValue + (units === UnitSystem.METRIC ? ' cm' : ' in')}
+                row={rowSpacingValue + (units === UnitSystem.METRIC ? ' cm' : ' in')}
                 depth={plan.spacing.seedDepth}
                 isDarkMode={isDarkMode}
              />
