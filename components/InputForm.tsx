@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { UserInput, SoilType, Orientation, UnitSystem, SprinklerConfig, WateringCanConfig } from '../types';
-import { Leaf, Droplets, MapPin, Calendar, Sun, Clock, GlassWater } from 'lucide-react';
+import { Leaf, Droplets, MapPin, Calendar, Sun, Clock, GlassWater, Moon, SunMedium } from 'lucide-react';
 
 interface InputFormProps {
   formData: UserInput;
   setFormData: React.Dispatch<React.SetStateAction<UserInput>>;
   onSubmit: () => void;
   isLoading: boolean;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 const GARDEN_JOKES = [
@@ -61,7 +63,7 @@ const GARDEN_JOKES = [
   "Gathering virtual compost..."
 ];
 
-export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onSubmit, isLoading }) => {
+export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onSubmit, isLoading, isDarkMode, toggleDarkMode }) => {
   const [loadingText, setLoadingText] = useState(GARDEN_JOKES[0]);
   const [progress, setProgress] = useState(0);
 
