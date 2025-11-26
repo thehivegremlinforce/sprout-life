@@ -31,23 +31,13 @@ const App: React.FC = () => {
   const [plan, setPlan] = useState<GardenPlanResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const themeClasses = useMemo(() => ({
-    page:
-      isDarkMode
-        ? 'bg-[#050d08] text-emerald-50 selection:bg-emerald-700'
-        : 'bg-stone-50/50 text-stone-800 selection:bg-emerald-200',
-    nav:
-      isDarkMode
-        ? 'bg-[#0b1a12]/80 border-emerald-900/50 text-emerald-50'
-        : 'bg-white/80 border-emerald-100/50 text-emerald-950',
-    cardShadow: isDarkMode ? 'shadow-emerald-950/40' : 'shadow-emerald-500/20',
-    footerText: isDarkMode ? 'text-emerald-200/80' : 'text-emerald-800/60',
-    footerSubtle: isDarkMode ? 'text-emerald-300/80' : 'text-emerald-600/90',
-  }), [isDarkMode]);
-
-  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
+  const themeClasses = {
+    page: 'bg-stone-50/50 text-stone-800 selection:bg-emerald-200',
+    nav: 'bg-white/80 border-emerald-100/50 text-emerald-950',
+    cardShadow: 'shadow-emerald-500/20',
+    footerText: 'text-emerald-800/60',
+    footerSubtle: 'text-emerald-600/90',
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -71,9 +61,9 @@ const App: React.FC = () => {
     <div className={`min-h-screen pb-6 font-sans flex flex-col transition-colors duration-300 ${themeClasses.page}`}>
       {/* Background Gradient Mesh */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div className={`${isDarkMode ? 'bg-emerald-900/30' : 'bg-emerald-200/20'} absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full blur-[100px]`} />
-        <div className={`${isDarkMode ? 'bg-emerald-800/25' : 'bg-lime-200/20'} absolute top-[10%] -right-[10%] w-[40%] h-[40%] rounded-full blur-[100px]`} />
-        <div className={`${isDarkMode ? 'bg-emerald-800/25' : 'bg-green-100/30'} absolute bottom-[0%] left-[20%] w-[60%] h-[40%] rounded-full blur-[120px]`} />
+        <div className="bg-emerald-200/20 absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full blur-[100px]" />
+        <div className="bg-lime-200/20 absolute top-[10%] -right-[10%] w-[40%] h-[40%] rounded-full blur-[100px]" />
+        <div className="bg-green-100/30 absolute bottom-[0%] left-[20%] w-[60%] h-[40%] rounded-full blur-[120px]" />
       </div>
 
       {/* Header */}
@@ -84,7 +74,7 @@ const App: React.FC = () => {
               <Sprout className="w-5 h-5" />
             </div>
             <span className="text-xl font-bold tracking-tight">
-              <span className={isDarkMode ? 'text-emerald-100' : 'text-emerald-950'}>SproutLife</span>
+              <span className="text-emerald-950">SproutLife</span>
             </span>
           </div>
 
@@ -116,8 +106,6 @@ const App: React.FC = () => {
               setFormData={setFormData}
               onSubmit={handleSubmit}
               isLoading={loading}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
             />
           </div>
         ) : (

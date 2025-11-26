@@ -117,59 +117,44 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
   const flowAvg = isMetric ? 20 : 5.3;
   const flowAvgLabel = isMetric ? "20 L/min" : "~5.3 gal/min";
 
-  const containerClasses = isDarkMode
-    ? "bg-[#0f1a14]/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-emerald-900 p-6 md:p-10 max-w-3xl w-full mx-auto space-y-10 relative text-emerald-50"
-    : "bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-emerald-100 p-6 md:p-10 max-w-3xl w-full mx-auto space-y-10 relative";
-  const headerTitleClass = isDarkMode ? "text-emerald-50" : "text-emerald-900";
-  const headerSubtitleClass = isDarkMode ? "text-emerald-200/80" : "text-emerald-700/80";
-  const unitToggleContainer = isDarkMode
-    ? "bg-emerald-950/50 p-1 rounded-xl flex gap-1 shadow-inner border border-emerald-900"
-    : "bg-emerald-100/50 p-1 rounded-xl flex gap-1 shadow-inner";
-  const inputBaseClass = isDarkMode
-    ? "w-full px-4 py-3 rounded-xl bg-emerald-950/50 border border-emerald-800 focus:ring-2 focus:ring-emerald-500/70 focus:border-emerald-500 outline-none transition placeholder-emerald-600 text-emerald-50 shadow-sm"
-    : "w-full px-4 py-3 rounded-xl bg-white border border-emerald-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition placeholder-emerald-300 text-emerald-900 shadow-sm";
-  const subtleLabel = isDarkMode ? "text-emerald-200/90" : "text-emerald-600";
-  const sectionHeading = isDarkMode ? "text-emerald-50" : "text-emerald-800";
-  const sectionBorder = isDarkMode ? "border-emerald-900" : "border-emerald-200";
-  const pillContainer = isDarkMode
-    ? "bg-emerald-950/60 text-emerald-100 border-emerald-800"
-    : "bg-white text-emerald-700 border-emerald-100";
-  const sliderTrack = isDarkMode ? "bg-emerald-900 accent-emerald-400" : "bg-emerald-200 accent-emerald-600";
+  const containerClasses = "bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-emerald-100 p-6 md:p-10 max-w-3xl w-full mx-auto space-y-10 relative";
+  const headerTitleClass = "text-emerald-900";
+  const headerSubtitleClass = "text-emerald-700/80";
+  const unitToggleContainer = "bg-emerald-100/50 p-1 rounded-xl flex gap-1 shadow-inner";
+  const inputBaseClass = "w-full px-4 py-3 rounded-xl bg-white border border-emerald-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition placeholder-emerald-300 text-emerald-900 shadow-sm";
+  const subtleLabel = "text-emerald-600";
+  const sectionHeading = "text-emerald-800";
+  const sectionBorder = "border-emerald-200";
+  const pillContainer = "bg-white text-emerald-700 border-emerald-100";
+  const sliderTrack = "bg-emerald-200 accent-emerald-600";
+  const cardSurface = "bg-stone-50/50 border-stone-100 text-emerald-800";
+  const cardSurfaceActive = "border-emerald-100 bg-white shadow-sm";
 
   return (
     <div className={containerClasses}>
       
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b pb-6" style={{ borderColor: isDarkMode ? '#0f2b1b' : undefined }}>
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b pb-6 border-emerald-200">
          <div className="text-center md:text-left space-y-2">
            <h2 className={`text-4xl font-extrabold tracking-tight ${headerTitleClass}`}>Garden Planner</h2>
            <p className={`text-lg ${headerSubtitleClass}`}>Design your perfect growing season.</p>
          </div>
 
-         {/* Toggles - Units + Dark Mode */}
+         {/* Toggles - Units */}
          <div className="flex flex-col sm:flex-row items-center gap-3">
            <div className={unitToggleContainer}>
               <button
                 onClick={() => handleChange('units', UnitSystem.METRIC)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${formData.units === UnitSystem.METRIC ? (isDarkMode ? 'bg-emerald-800 text-emerald-50 shadow-lg shadow-emerald-950/50' : 'bg-white shadow text-emerald-700') : (isDarkMode ? 'text-emerald-200 hover:text-emerald-50' : 'text-emerald-600/70 hover:text-emerald-700')}`}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${formData.units === UnitSystem.METRIC ? 'bg-white shadow text-emerald-700' : 'text-emerald-600/70 hover:text-emerald-700'}`}
               >
                 Metric
               </button>
               <button
                 onClick={() => handleChange('units', UnitSystem.IMPERIAL)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${formData.units === UnitSystem.IMPERIAL ? (isDarkMode ? 'bg-emerald-800 text-emerald-50 shadow-lg shadow-emerald-950/50' : 'bg-white shadow text-emerald-700') : (isDarkMode ? 'text-emerald-200 hover:text-emerald-50' : 'text-emerald-600/70 hover:text-emerald-700')}`}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${formData.units === UnitSystem.IMPERIAL ? 'bg-white shadow text-emerald-700' : 'text-emerald-600/70 hover:text-emerald-700'}`}
               >
                 Imperial
               </button>
            </div>
-
-           <button
-             onClick={toggleDarkMode}
-             className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all border ${isDarkMode ? 'bg-emerald-800 text-emerald-100 border-emerald-700 shadow-lg shadow-emerald-950/40 hover:bg-emerald-700' : 'bg-emerald-950 text-white border-emerald-900 shadow-lg shadow-emerald-500/30 hover:bg-emerald-900'}`}
-             aria-pressed={isDarkMode}
-           >
-             {isDarkMode ? <SunMedium className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-           </button>
          </div>
       </div>
 
@@ -180,7 +165,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
           {/* Location & Crop */}
           <section className="space-y-4">
             <div className={`flex items-center gap-2 ${sectionHeading} border-b ${sectionBorder} pb-2`}>
-              <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-emerald-900/60 text-emerald-100' : 'bg-emerald-100'}`}>
+              <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700">
                 <MapPin className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-lg">Location & Crop</h3>
@@ -215,7 +200,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
           {/* Planter Details */}
             <section className="space-y-4">
             <div className={`flex items-center gap-2 ${sectionHeading} border-b ${sectionBorder} pb-2`}>
-              <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-emerald-900/60 text-emerald-100' : 'bg-emerald-100'}`}>
+              <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700">
                 <Sun className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-lg">Conditions</h3>
@@ -248,9 +233,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                       className={`py-2 rounded-lg font-medium text-sm transition-all border ${
                         formData.bedOrientation === o
                         ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-200'
-                        : isDarkMode
-                          ? 'bg-emerald-950/50 border-emerald-800 text-emerald-100 hover:bg-emerald-900/60'
-                          : 'bg-white border-emerald-100 text-emerald-700 hover:bg-emerald-50'
+                        : 'bg-white border-emerald-100 text-emerald-700 hover:bg-emerald-50'
                       }`}
                     >
                       {o.charAt(0)}
@@ -262,7 +245,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
               <div>
                  <div className="flex justify-between items-center mb-2">
                     <label className={`text-sm font-semibold ${sectionHeading}`}>Daylight Access</label>
-                    <span className={`text-sm font-bold ${isDarkMode ? 'text-emerald-300' : 'text-emerald-600'}`}>{formData.sunlightHours} hrs</span>
+                    <span className="text-sm font-bold text-emerald-600">{formData.sunlightHours} hrs</span>
                  </div>
                  <input
                     type="range"
@@ -273,7 +256,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                     onChange={(e) => handleChange('sunlightHours', parseFloat(e.target.value))}
                     className={`w-full h-2 rounded-lg appearance-none cursor-pointer ${sliderTrack}`}
                  />
-                 <div className={`flex justify-between text-xs mt-1 ${isDarkMode ? 'text-emerald-300/70' : 'text-emerald-500'}`}>
+                 <div className="flex justify-between text-xs mt-1 text-emerald-500">
                    <span>Full Shade</span>
                    <span>Partial</span>
                    <span>Full Sun</span>
@@ -290,7 +273,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
             {/* Timing */}
             <section className="space-y-4">
                <div className={`flex items-center gap-2 ${sectionHeading} border-b ${sectionBorder} pb-2`}>
-                  <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-emerald-900/60 text-emerald-100' : 'bg-emerald-100'}`}>
+                  <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-lg">Timing</h3>
@@ -307,7 +290,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                    />
                 </div>
                 
-                  <div className={`${isDarkMode ? 'bg-emerald-950/50 border-emerald-800' : 'bg-emerald-50/50 border-emerald-100'} p-5 rounded-2xl border space-y-3`}>
+                  <div className={`${cardSurface} p-5 rounded-2xl border space-y-3`}>
                     <span className={`text-sm font-bold uppercase tracking-wide ${sectionHeading}`}>Set a Goal</span>
                   <div className="flex gap-4">
                     <label className="flex items-center gap-2 cursor-pointer group">
@@ -347,10 +330,10 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
              </div>
           </section>
 
-          {/* Irrigation */}
+         {/* Irrigation */}
           <section className="space-y-4">
-             <div className="flex items-center gap-2 text-emerald-800 border-b border-emerald-200 pb-2">
-                <div className="p-1.5 bg-emerald-100 rounded-lg">
+             <div className={`flex items-center gap-2 ${sectionHeading} border-b ${sectionBorder} pb-2`}>
+                <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700">
                   <Droplets className="w-5 h-5" />
                 </div>
                 <h3 className="font-bold text-lg">Irrigation</h3>
@@ -359,7 +342,10 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
              <div className="space-y-3">
               {/* Sprinklers */}
               {formData.sprinklers.map((sprinkler) => (
-                <div key={sprinkler.id} className={`border rounded-xl p-4 transition-all ${sprinkler.enabled ? 'border-blue-200 bg-blue-50/50 shadow-sm' : 'border-stone-100 bg-stone-50/50 opacity-70 hover:opacity-100'}`}>
+                <div
+                  key={sprinkler.id}
+                  className={`rounded-xl p-4 transition-all ${sprinkler.enabled ? `${cardSurfaceActive}` : `${cardSurface} opacity-80 hover:opacity-100`}`}
+                >
                   <div className="flex items-center justify-between mb-3">
                     <span className={`font-semibold text-sm ${sectionHeading}`}>Sprinkler #{sprinkler.id}</span>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -369,7 +355,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                         checked={sprinkler.enabled}
                         onChange={(e) => updateSprinkler(sprinkler.id, 'enabled', e.target.checked)}
                       />
-                      <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+                      <div className={`w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all ${sprinkler.enabled ? 'peer-checked:bg-emerald-500' : 'peer-checked:bg-emerald-500'}`}></div>
                     </label>
                   </div>
                   
@@ -433,7 +419,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
               ))}
 
               {/* Manual Watering Can Section */}
-              <div className={`border rounded-xl p-4 transition-all ${formData.wateringCan.enabled ? 'border-sky-200 bg-sky-50/50 shadow-sm' : 'border-stone-100 bg-stone-50/50 opacity-70 hover:opacity-100'}`}>
+              <div className={`rounded-xl p-4 transition-all ${formData.wateringCan.enabled ? `${cardSurfaceActive}` : `${cardSurface} opacity-80 hover:opacity-100`}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                        <GlassWater className="w-4 h-4 text-sky-600" />
@@ -446,7 +432,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                         checked={formData.wateringCan.enabled}
                         onChange={(e) => updateWateringCan('enabled', e.target.checked)}
                       />
-                      <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-sky-500"></div>
+                      <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
                     </label>
                   </div>
                   
