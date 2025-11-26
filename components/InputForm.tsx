@@ -135,12 +135,6 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
     ? "bg-emerald-950/60 text-emerald-100 border-emerald-800"
     : "bg-white text-emerald-700 border-emerald-100";
   const sliderTrack = isDarkMode ? "bg-emerald-900 accent-emerald-400" : "bg-emerald-200 accent-emerald-600";
-  const cardSurface = isDarkMode
-    ? "bg-emerald-950/60 border-emerald-900 text-emerald-50"
-    : "bg-stone-50/50 border-stone-100 text-emerald-800";
-  const cardSurfaceActive = isDarkMode
-    ? "border-emerald-700/70 bg-emerald-900/60 shadow-lg shadow-emerald-950/30"
-    : "border-emerald-100 bg-white shadow-sm";
 
   return (
     <div className={containerClasses}>
@@ -313,7 +307,7 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                    />
                 </div>
                 
-                  <div className={`${isDarkMode ? 'bg-emerald-950/60 border-emerald-800/80 text-emerald-50' : 'bg-emerald-50/50 border-emerald-100 text-emerald-900'} p-5 rounded-2xl border space-y-3`}>
+                  <div className={`${isDarkMode ? 'bg-emerald-950/50 border-emerald-800' : 'bg-emerald-50/50 border-emerald-100'} p-5 rounded-2xl border space-y-3`}>
                     <span className={`text-sm font-bold uppercase tracking-wide ${sectionHeading}`}>Set a Goal</span>
                   <div className="flex gap-4">
                     <label className="flex items-center gap-2 cursor-pointer group">
