@@ -72,6 +72,18 @@ const SpacingVisualizer: React.FC<{ between: string; row: string; depth: string 
   );
 };
 
+const extractSpacingValue = (value: string, preferredUnit: 'metric' | 'imperial') => {
+  const match = value.replace(',', '.').match(/([\d.]+)\s*(cm|in|"|')?/i);
+  if (match) {
+    const numeric = match[1];
+    return `${numeric}${preferredUnit === 'metric' ? 'cm' : 'in'}`;
+  }
+
+  // Fallback to the first chunk of text to avoid rendering empty strings
+  const firstToken = value.split(/\s+/)[0];
+  return `${firstToken}${preferredUnit === 'metric' ? 'cm' : 'in'}`;
+};
+
 const PestCard: React.FC<{ name: string }> = ({ name }) => (
   <div className="flex items-center justify-between bg-rose-50 p-3 rounded-xl border border-rose-100 group hover:bg-rose-100 transition-colors">
     <span className="text-sm font-bold text-rose-800">{name}</span>
@@ -98,47 +110,47 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
       {/* Printable Area Wrapper */}
       <div className="space-y-10 pb-6 bg-white p-4 sm:p-0">
         {/* Hero Header */}
-        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl bg-emerald-900 text-white">
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 to-emerald-800/80 z-10" />
-          <img 
-            src="https://picsum.photos/1200/400?grayscale" 
-            alt={plan.cropName} 
-            className="absolute inset-0 w-full h-full object-cover opacity-30 scale-105"
+        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl bg-gradient-to-r from-emerald-50 via-white to-emerald-50 text-emerald-900 border border-emerald-100">
+          <img
+            src="https://picsum.photos/1200/400?grayscale"
+            alt={plan.cropName}
+            className="absolute inset-0 w-full h-full object-cover opacity-20 scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-emerald-50/80" />
           <div className="relative z-20 p-8 md:p-14">
             <div className="flex flex-col md:flex-row justify-between items-start gap-6">
               <div className="space-y-6 w-full min-w-0">
                 <div className="flex flex-wrap items-center gap-3">
                    {plan.locationName && (
-                    <div className="inline-flex items-center justify-center gap-2 bg-emerald-800/80 px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-500/30 text-emerald-100 text-center">
-                      <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                    <div className="inline-flex items-center justify-center gap-2 bg-white px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-100 text-emerald-800 text-center shadow-sm">
+                      <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-emerald-600" />
                       <span>{plan.locationName}</span>
                     </div>
                    )}
-                   <div className="inline-flex items-center justify-center gap-2 bg-emerald-800/80 px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-500/30 text-emerald-100 text-center">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] flex-shrink-0"></span>
+                   <div className="inline-flex items-center justify-center gap-2 bg-emerald-50 px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-100 text-emerald-800 text-center shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(52,211,153,0.8)] flex-shrink-0"></span>
                       <span>{hemisphereText}</span>
                     </div>
-                    <div className="inline-flex items-center justify-center gap-2 bg-white/20 px-4 py-1.5 rounded-full text-sm font-semibold border border-white/10 text-emerald-50 text-center">
-                      <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+                    <div className="inline-flex items-center justify-center gap-2 bg-white px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-100 text-emerald-700 text-center shadow-sm">
+                      <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-emerald-600" />
                       <span>Best Season: {plan.overview.bestSeason}</span>
                     </div>
                 </div>
-                
+
                 <div className="space-y-2">
-                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-br from-white to-emerald-200 drop-shadow-sm leading-tight break-words">
+                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-br from-emerald-700 via-emerald-500 to-emerald-400 drop-shadow-sm leading-tight break-words">
                     {plan.cropName}
                   </h1>
-                  <p className="text-emerald-100/90 text-lg md:text-xl max-w-2xl leading-relaxed font-light whitespace-pre-line">
+                  <p className="text-emerald-800 text-lg md:text-xl max-w-2xl leading-relaxed font-medium whitespace-pre-line">
                     {plan.overview.description}
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col items-end gap-4 flex-shrink-0 w-full md:w-auto">
-                <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-500/30 text-center min-w-[180px] max-w-xs w-full md:w-auto">
-                  <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold block mb-1">Difficulty</span>
-                  <span className="text-2xl font-bold leading-snug break-words" aria-label="Difficulty level">
+                <div className="bg-white p-4 rounded-2xl border border-emerald-100 text-center min-w-[180px] max-w-xs w-full md:w-auto shadow-sm">
+                  <span className="text-xs uppercase tracking-widest text-emerald-500 font-bold block mb-1">Difficulty</span>
+                  <span className="text-2xl font-bold leading-snug break-words text-emerald-800" aria-label="Difficulty level">
                     {plan.overview.difficulty}
                   </span>
                 </div>
@@ -243,7 +255,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
                  <ul className="space-y-3">
                    {plan.soil.fertilizerTimeline.map((item, i) => (
                      <li key={i} className="text-sm flex flex-col gap-1">
-                       <span className="font-bold text-orange-700 text-xs py-1 px-2 bg-orange-100 rounded-lg whitespace-nowrap w-fit">{item.stage}</span>
+                       <span className="font-bold text-orange-700 text-xs py-1 px-2 bg-orange-100 rounded-lg break-words whitespace-normal w-fit max-w-full text-left">{item.stage}</span>
                        <span className="text-stone-600 leading-snug whitespace-pre-line pl-1">{item.action}</span>
                      </li>
                    ))}
@@ -317,16 +329,21 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
                    <div className="text-[10px] text-stone-400 font-bold uppercase mb-1">Thin To</div>
                    <div className="font-bold text-stone-800 text-sm whitespace-pre-line">{plan.spacing.thinning}</div>
                 </div>
-                <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100 col-span-2">
-                   <div className="text-[10px] text-stone-400 font-bold uppercase mb-1">Distance</div>
-                   <div className="font-bold text-stone-800 text-sm whitespace-pre-line">{plan.spacing.plantSpacing} between plants<br/>{plan.spacing.rowSpacing} between rows</div>
+                <div className="bg-stone-50 p-4 rounded-2xl border border-stone-100 col-span-2 text-left space-y-2">
+                   <div className="text-[10px] text-stone-400 font-bold uppercase">Distance</div>
+                   <div className="space-y-1 text-stone-700 leading-relaxed">
+                     <p className="font-semibold text-sm">Between plants</p>
+                     <p className="text-sm whitespace-pre-line">{plan.spacing.plantSpacing}</p>
+                     <p className="font-semibold text-sm pt-2">Between rows</p>
+                     <p className="text-sm whitespace-pre-line">{plan.spacing.rowSpacing}</p>
+                   </div>
                 </div>
              </div>
-             
-             <SpacingVisualizer 
-                between={plan.spacing.plantSpacing.split(' ')[0] + (units === UnitSystem.METRIC ? 'cm' : 'in')} 
-                row={plan.spacing.rowSpacing.split(' ')[0] + (units === UnitSystem.METRIC ? 'cm' : 'in')}
-                depth={plan.spacing.seedDepth}
+
+             <SpacingVisualizer
+               between={extractSpacingValue(plan.spacing.plantSpacing, units === UnitSystem.METRIC ? 'metric' : 'imperial')}
+               row={extractSpacingValue(plan.spacing.rowSpacing, units === UnitSystem.METRIC ? 'metric' : 'imperial')}
+               depth={plan.spacing.seedDepth}
              />
           </Card>
 
