@@ -121,7 +121,7 @@ const App: React.FC = () => {
             />
           </div>
         ) : (
-          <PlanDisplay plan={plan} units={formData.units} reset={handleReset} />
+          <PlanDisplay plan={plan} units={formData.units} reset={handleReset} isDarkMode={isDarkMode} />
         )}
       </main>
 
