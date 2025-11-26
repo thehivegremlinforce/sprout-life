@@ -72,6 +72,18 @@ const SpacingVisualizer: React.FC<{ between: string; row: string; depth: string 
   );
 };
 
+const extractSpacingValue = (value: string, preferredUnit: 'metric' | 'imperial') => {
+  const match = value.replace(',', '.').match(/([\d.]+)\s*(cm|in|"|')?/i);
+  if (match) {
+    const numeric = match[1];
+    return `${numeric}${preferredUnit === 'metric' ? 'cm' : 'in'}`;
+  }
+
+  // Fallback to the first chunk of text to avoid rendering empty strings
+  const firstToken = value.split(/\s+/)[0];
+  return `${firstToken}${preferredUnit === 'metric' ? 'cm' : 'in'}`;
+};
+
 const PestCard: React.FC<{ name: string }> = ({ name }) => (
   <div className="flex items-center justify-between bg-rose-50 p-3 rounded-xl border border-rose-100 group hover:bg-rose-100 transition-colors">
     <span className="text-sm font-bold text-rose-800">{name}</span>
@@ -243,7 +255,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
                  <ul className="space-y-3">
                    {plan.soil.fertilizerTimeline.map((item, i) => (
                      <li key={i} className="text-sm flex flex-col gap-1">
-                       <span className="font-bold text-orange-700 text-xs py-1 px-2 bg-orange-100 rounded-lg whitespace-nowrap w-fit">{item.stage}</span>
+                       <span className="font-bold text-orange-700 text-xs py-1 px-2 bg-orange-100 rounded-lg break-words whitespace-normal w-fit max-w-full text-left">{item.stage}</span>
                        <span className="text-stone-600 leading-snug whitespace-pre-line pl-1">{item.action}</span>
                      </li>
                    ))}
@@ -317,16 +329,21 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
                    <div className="text-[10px] text-stone-400 font-bold uppercase mb-1">Thin To</div>
                    <div className="font-bold text-stone-800 text-sm whitespace-pre-line">{plan.spacing.thinning}</div>
                 </div>
-                <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100 col-span-2">
-                   <div className="text-[10px] text-stone-400 font-bold uppercase mb-1">Distance</div>
-                   <div className="font-bold text-stone-800 text-sm whitespace-pre-line">{plan.spacing.plantSpacing} between plants<br/>{plan.spacing.rowSpacing} between rows</div>
+                <div className="bg-stone-50 p-4 rounded-2xl border border-stone-100 col-span-2 text-left space-y-2">
+                   <div className="text-[10px] text-stone-400 font-bold uppercase">Distance</div>
+                   <div className="space-y-1 text-stone-700 leading-relaxed">
+                     <p className="font-semibold text-sm">Between plants</p>
+                     <p className="text-sm whitespace-pre-line">{plan.spacing.plantSpacing}</p>
+                     <p className="font-semibold text-sm pt-2">Between rows</p>
+                     <p className="text-sm whitespace-pre-line">{plan.spacing.rowSpacing}</p>
+                   </div>
                 </div>
              </div>
-             
-             <SpacingVisualizer 
-                between={plan.spacing.plantSpacing.split(' ')[0] + (units === UnitSystem.METRIC ? 'cm' : 'in')} 
-                row={plan.spacing.rowSpacing.split(' ')[0] + (units === UnitSystem.METRIC ? 'cm' : 'in')}
-                depth={plan.spacing.seedDepth}
+
+             <SpacingVisualizer
+               between={extractSpacingValue(plan.spacing.plantSpacing, units === UnitSystem.METRIC ? 'metric' : 'imperial')}
+               row={extractSpacingValue(plan.spacing.rowSpacing, units === UnitSystem.METRIC ? 'metric' : 'imperial')}
+               depth={plan.spacing.seedDepth}
              />
           </Card>
 
