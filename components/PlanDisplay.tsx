@@ -107,7 +107,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
           />
           <div className="relative z-20 p-8 md:p-14">
             <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-              <div className="space-y-6 w-full">
+              <div className="space-y-6 w-full min-w-0">
                 <div className="flex flex-wrap items-center gap-3">
                    {plan.locationName && (
                     <div className="inline-flex items-center justify-center gap-2 bg-emerald-800/80 px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-500/30 text-emerald-100 text-center">
@@ -126,7 +126,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
                 </div>
                 
                 <div className="space-y-2">
-                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-br from-white to-emerald-200 drop-shadow-sm leading-tight">
+                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-br from-white to-emerald-200 drop-shadow-sm leading-tight break-words">
                     {plan.cropName}
                   </h1>
                   <p className="text-emerald-100/90 text-lg md:text-xl max-w-2xl leading-relaxed font-light whitespace-pre-line">
@@ -135,10 +135,12 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-4 flex-shrink-0">
-                <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-500/30 text-center min-w-[140px]">
+              <div className="flex flex-col items-end gap-4 flex-shrink-0 w-full md:w-auto">
+                <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-500/30 text-center min-w-[180px] max-w-xs w-full md:w-auto">
                   <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold block mb-1">Difficulty</span>
-                  <span className="text-2xl font-bold">{plan.overview.difficulty}</span>
+                  <span className="text-2xl font-bold leading-snug break-words" aria-label="Difficulty level">
+                    {plan.overview.difficulty}
+                  </span>
                 </div>
               </div>
             </div>
