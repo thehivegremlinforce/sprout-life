@@ -98,12 +98,12 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({ plan, units, reset }) 
       {/* Printable Area Wrapper */}
       <div className="space-y-10 pb-6 bg-white p-4 sm:p-0">
         {/* Hero Header */}
-        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl bg-emerald-900 text-white">
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 to-emerald-800/80 z-10" />
-          <img 
-            src="https://picsum.photos/1200/400?grayscale" 
-            alt={plan.cropName} 
-            className="absolute inset-0 w-full h-full object-cover opacity-30 scale-105"
+        <div className="relative rounded-[2rem] overflow-hidden shadow-2xl bg-emerald-950 text-white">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/85 to-emerald-900/80 z-10" />
+          <img
+            src="https://picsum.photos/1200/400?grayscale"
+            alt={plan.cropName}
+            className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105 mix-blend-multiply"
           />
           <div className="relative z-20 p-8 md:p-14">
             <div className="flex flex-col md:flex-row justify-between items-start gap-6">
