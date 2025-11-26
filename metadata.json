@@ -1,0 +1,5 @@
+{
+  "name": "SproutLife",
+  "description": "An expert horticulture and garden planning assistant that generates personalized growing plans based on your location, soil, and equipment.",
+  "requestFramePermissions": []
+}
