@@ -267,15 +267,46 @@ export const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onS
                     <label className={`text-sm font-semibold ${sectionHeading}`}>Daylight Access</label>
                     <span className={`text-sm font-bold ${isDarkMode ? 'text-emerald-300' : 'text-emerald-600'}`}>{formData.sunlightHours} hrs</span>
                  </div>
-                 <input
-                    type="range"
-                    min="0"
-                    max="16"
-                    step="0.5"
-                    value={formData.sunlightHours}
-                    onChange={(e) => handleChange('sunlightHours', parseFloat(e.target.value))}
-                    className={`w-full h-2 rounded-lg appearance-none cursor-pointer ${sliderTrack}`}
-                 />
+                 <div className="relative">
+                   <input
+                      type="range"
+                      min="0"
+                      max="16"
+                      step="0.5"
+                      value={formData.sunlightHours}
+                      onChange={(e) => handleChange('sunlightHours', parseFloat(e.target.value))}
+                      className="w-full h-2 rounded-lg appearance-none cursor-pointer sunlight-slider"
+                      style={{
+                        background: `linear-gradient(to right, 
+                          #ef4444 0%, 
+                          #f97316 25%, 
+                          #eab308 50%, 
+                          #84cc16 75%, 
+                          #22c55e 100%)`
+                      }}
+                   />
+                   <style>{`
+                     .sunlight-slider::-webkit-slider-thumb {
+                       appearance: none;
+                       width: 20px;
+                       height: 20px;
+                       border-radius: 50%;
+                       background: white;
+                       cursor: pointer;
+                       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                       border: 2px solid ${isDarkMode ? '#047857' : '#059669'};
+                     }
+                     .sunlight-slider::-moz-range-thumb {
+                       width: 20px;
+                       height: 20px;
+                       border-radius: 50%;
+                       background: white;
+                       cursor: pointer;
+                       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                       border: 2px solid ${isDarkMode ? '#047857' : '#059669'};
+                     }
+                   `}</style>
+                 </div>
                  <div className={`flex justify-between text-xs mt-1 ${isDarkMode ? 'text-emerald-300/70' : 'text-emerald-500'}`}>
                    <span>Full Shade</span>
                    <span>Partial</span>
