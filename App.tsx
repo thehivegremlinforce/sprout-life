@@ -87,15 +87,6 @@ const App: React.FC = () => {
               <span className={isDarkMode ? 'text-emerald-100' : 'text-emerald-950'}>SproutLife</span>
             </span>
           </div>
-
-          {/* Ko-fi Button - Top Right */}
-          <a href='https://ko-fi.com/J3J51P5FP4' target='_blank' rel="noopener noreferrer" className="hover:opacity-90 transition-opacity">
-            <img 
-              src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' 
-              alt='Buy Me a Coffee at ko-fi.com' 
-              style={{ border: '0px', height: '36px' }}
-            />
-          </a>
         </div>
       </nav>
 
