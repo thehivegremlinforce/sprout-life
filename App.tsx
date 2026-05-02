@@ -128,7 +128,7 @@ const App: React.FC = () => {
         </a>
         
         <div>
-          <p className="font-semibold">&copy; Brian & Nikki D'Souza 2025</p>
+          <p className="font-semibold">&copy; Brian D 2025</p>
           <p className="text-xs mt-1 opacity-80">All Advice is general in nature</p>
           <p className={`text-xs mt-3 font-medium italic ${themeClasses.footerSubtle}`}>This is an example of a AI used to benefit humanity :)</p>
         </div>
